@@ -19,12 +19,6 @@ A full-stack web application built using Django to help students efficiently tra
 - Resume analysis using ML
 - Interview performance prediction
 
-## 📸 Screenshots
-(Add screenshots here)
-
-## ⚙️ Setup Instructions
-(steps below)
-
 ## 🤝 Contributing
 Suggestions and contributions are welcome!
 # AI-placement-tracker
