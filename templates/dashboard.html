@@ -1,0 +1,96 @@
+{% extends "base.html" %}
+
+{% block title %}
+Dashboard
+{% endblock %}
+
+{% block content %}
+<div class="grid grid-cols-1 md:grid-cols-3 gap-6 mb-8">
+
+    <div class="bg-white p-6 rounded-xl shadow">
+        <h3 class="text-gray-500 text-sm">Total Topics</h3>
+        <p class="text-2xl font-bold">{{ total_topics }}</p>
+    </div>
+
+    <div class="bg-white p-6 rounded-xl shadow">
+        <h3 class="text-gray-500 text-sm">Completed</h3>
+        <p class="text-2xl font-bold text-green-600">{{ completed_topics }}</p>
+    </div>
+
+    <div class="bg-white p-6 rounded-xl shadow">
+        <h3 class="text-gray-500 text-sm">Progress</h3>
+        <p class="text-2xl font-bold text-blue-600">{{ progress }}%</p>
+    </div>
+
+</div>
+
+<div class="max-w-4xl mx-auto mt-10">
+
+    <h1 class="text-3xl font-bold mb-6">
+        Welcome to AI Placement Tracker 🚀
+    </h1>
+
+    <!-- Progress Section -->
+    <div class="mb-8">
+        <h2 class="text-xl font-semibold mb-2">Overall Progress</h2>
+
+        <div class="w-full bg-gray-200 rounded-full h-6">
+            <div 
+                class="bg-green-500 h-6 rounded-full text-center text-white"
+                style="width: {{ progress }}%;">
+                {{ progress }}%
+            </div>
+        </div>
+    </div>
+
+    <!-- Topics Section -->
+    <div>
+        <h2 class="text-xl font-semibold mb-4">Your Topics</h2>
+
+        {% if topics %}
+            <div class="space-y-4">
+                {% for topic in topics %}
+                    <div class="flex justify-between items-center bg-white shadow p-4 rounded">
+
+                        <!-- Topic Name -->
+                        <div>
+                            <h3 class="text-lg font-medium">
+                                {{ topic.name }}
+                            </h3>
+
+                            {% if topic.completed %}
+                                <p class="text-green-600 text-sm">Completed ✅</p>
+                            {% else %}
+                                <p class="text-red-500 text-sm">Pending ❌</p>
+                            {% endif %}
+                        </div>
+
+                        <!-- Toggle Button -->
+                        <a href="{% url 'toggle_complete' topic.id %}"
+                           class="px-4 py-2 text-white rounded
+                           {% if topic.completed %}
+                               bg-red-500
+                           {% else %}
+                               bg-green-500
+                           {% endif %}">
+
+                            {% if topic.completed %}
+                                Mark Incomplete
+                            {% else %}
+                                Mark Complete
+                            {% endif %}
+
+                        </a>
+
+                    </div>
+                {% endfor %}
+            </div>
+        {% else %}
+            <p class="text-gray-500">No topics added yet.</p>
+        {% endif %}
+
+    </div>
+
+</div>
+
+{% endblock %}

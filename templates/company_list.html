@@ -1,0 +1,74 @@
+{% extends "base.html" %}
+
+{% block content %}
+
+<div class="max-w-5xl mx-auto mt-10 px-4">
+
+    <!-- Header -->
+    <div class="flex justify-between items-center mb-8">
+        <h2 class="text-3xl font-bold">Your Companies</h2>
+
+        <a href="{% url 'company_create' %}"
+           class="bg-blue-600 text-white px-5 py-2 rounded-lg hover:bg-blue-700 transition">
+            + Add Company
+        </a>
+    </div>
+
+    <!-- Company Cards -->
+    <div class="space-y-5">
+
+        {% for company in companies %}
+        <div class="bg-white shadow-lg rounded-xl p-6 flex justify-between items-center hover:shadow-xl transition">
+
+            <div>
+                <h3 class="text-xl font-semibold">{{ company.name }}</h3>
+
+                <p class="text-gray-500 text-sm mt-1">
+                    Role: {{ company.role }}
+                </p>
+
+                <p class="text-gray-500 text-sm">
+                    Status: {{ company.preparation_status }}
+              {% if company.preparation_status == 'selected' %}
+    <span class="px-3 py-1 text-xs bg-green-100 text-green-700 rounded-full">
+        Selected
+    </span>
+{% elif company.preparation_status == 'interview' %}
+    <span class="px-3 py-1 text-xs bg-blue-100 text-blue-700 rounded-full">
+        Interview
+    </span>
+{% elif company.preparation_status == 'rejected' %}
+    <span class="px-3 py-1 text-xs bg-red-100 text-red-700 rounded-full">
+        Rejected
+    </span>
+{% else %}
+    <span class="px-3 py-1 text-xs bg-yellow-100 text-yellow-700 rounded-full">
+        Preparing
+    </span>
+{% endif %}
+            </div>
+
+            <div class="space-x-4">
+                <a href="{% url 'company_update' company.pk %}"
+                   class="text-blue-600 hover:underline font-medium">
+                    Edit
+                </a>
+
+                <a href="{% url 'company_delete' company.pk %}"
+                   class="text-red-600 hover:underline font-medium">
+                    Delete
+                </a>
+            </div>
+
+        </div>
+        {% empty %}
+        <div class="bg-white p-6 rounded shadow text-gray-500">
+            No companies added yet.
+        </div>
+        {% endfor %}
+
+    </div>
+
+</div>
+
+{% endblock %}
